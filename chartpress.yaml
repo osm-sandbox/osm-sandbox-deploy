@@ -1,0 +1,11 @@
+charts:
+  # - name: osm-sandbox
+  #   imagePrefix: ghcr.io/openhistoricalmap/
+  #   images:
+  #     web:
+  #       valuesPath: osm-seed.web.image
+  - name: osm-sandbox
+    imagePrefix: ghcr.io/openhistoricalmap/
+    images:
+      osm-sandbox-user:
+        valuesPath: osmSandboxUser.image

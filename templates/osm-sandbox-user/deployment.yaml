@@ -1,0 +1,59 @@
+{{- if .Values.osmSandboxUser.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-osmSandboxUser-web
+  labels:
+    app: {{ template "osm-sandbox.name" . }}
+    component: web-deployment
+    environment: {{ .Values.environment }}
+    release: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "osm-sandbox.name" . }}
+      release: {{ .Release.Name }}
+      run: {{ .Release.Name }}-osmSandboxUser-web
+  template:
+    metadata:
+      labels:
+        app: {{ template "osm-sandbox.name" . }}
+        release: {{ .Release.Name }}
+        run: {{ .Release.Name }}-osmSandboxUser-web
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-osmSandboxUser
+          image: "{{ .Values.osmSandboxUser.image.name }}:{{ .Values.osmSandboxUser.image.tag }}"
+          command:
+            - /bin/sh
+            - -c
+            - |
+              /usr/src/app/start.sh
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 120
+            timeoutSeconds: 60
+          {{- if .Values.osmSandboxUser.resources.enabled }}
+          resources:
+            requests:
+              memory: {{ .Values.osmSandboxUser.resources.requests.memory }}
+              cpu: {{ .Values.osmSandboxUser.resources.requests.cpu }}
+            limits:
+              memory: {{ .Values.osmSandboxUser.resources.limits.memory }}
+              cpu: {{ .Values.osmSandboxUser.resources.limits.cpu }}
+          {{- end }}
+          envFrom:
+          - configMapRef:
+              name: {{ .Release.Name }}-osmSandboxUser-common-env
+      {{- if .Values.osmSandboxUser.nodeSelector.enabled }}
+      nodeSelector:
+        {{ .Values.osmSandboxUser.nodeSelector.label_key }} : {{ .Values.osmSandboxUser.nodeSelector.label_value }}
+      {{- end }}
+{{- end }}

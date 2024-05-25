@@ -1,0 +1,8 @@
+{{- if .Values.osmSandboxUser.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-osmSandboxUser-common-env
+data:
+    ENVIRONMENT: {{ .Values.osmSandboxUser.env.ENVIRONMENT | quote }}
+{{- end }}
