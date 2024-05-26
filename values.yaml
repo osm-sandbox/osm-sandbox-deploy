@@ -5,8 +5,8 @@ osm-seed:
   AWS_S3_BUCKET: "dev"
   AWS_SSL_ARN: "ss"
   serviceType: *serviceType
-  domain: staging.openhistoricalmap.org
-  adminEmail: ohm-admins@googlegroups.com
+  domain: staging.osm-sandbox.org
+  adminEmail: osm-sandbox@googlegroups.com
   db:
     enabled: true
     image:
