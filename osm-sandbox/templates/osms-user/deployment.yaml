@@ -1,8 +1,8 @@
-{{- if .Values.osmSandboxUser.enabled -}}
+{{- if .Values.osms-user.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-osmSandboxUser-web
+  name: {{ .Release.Name }}-osms-user-web
   labels:
     app: {{ template "osm-sandbox.name" . }}
     component: web-deployment
@@ -14,17 +14,17 @@ spec:
     matchLabels:
       app: {{ template "osm-sandbox.name" . }}
       release: {{ .Release.Name }}
-      run: {{ .Release.Name }}-osmSandboxUser-web
+      run: {{ .Release.Name }}-osms-user-web
   template:
     metadata:
       labels:
         app: {{ template "osm-sandbox.name" . }}
         release: {{ .Release.Name }}
-        run: {{ .Release.Name }}-osmSandboxUser-web
+        run: {{ .Release.Name }}-osms-user-web
     spec:
       containers:
-        - name: {{ .Chart.Name }}-osmSandboxUser
-          image: "{{ .Values.osmSandboxUser.image.name }}:{{ .Values.osmSandboxUser.image.tag }}"
+        - name: {{ .Chart.Name }}-osms-user
+          image: "{{ .Values.osms-user.image.name }}:{{ .Values.osms-user.image.tag }}"
           command:
             - /bin/sh
             - -c
@@ -40,20 +40,20 @@ spec:
               port: 80
             initialDelaySeconds: 120
             timeoutSeconds: 60
-          {{- if .Values.osmSandboxUser.resources.enabled }}
+          {{- if .Values.osms-user.resources.enabled }}
           resources:
             requests:
-              memory: {{ .Values.osmSandboxUser.resources.requests.memory }}
-              cpu: {{ .Values.osmSandboxUser.resources.requests.cpu }}
+              memory: {{ .Values.osms-user.resources.requests.memory }}
+              cpu: {{ .Values.osms-user.resources.requests.cpu }}
             limits:
-              memory: {{ .Values.osmSandboxUser.resources.limits.memory }}
-              cpu: {{ .Values.osmSandboxUser.resources.limits.cpu }}
+              memory: {{ .Values.osms-user.resources.limits.memory }}
+              cpu: {{ .Values.osms-user.resources.limits.cpu }}
           {{- end }}
           envFrom:
           - configMapRef:
-              name: {{ .Release.Name }}-osmSandboxUser-common-env
-      {{- if .Values.osmSandboxUser.nodeSelector.enabled }}
+              name: {{ .Release.Name }}-osms-user-common-env
+      {{- if .Values.osms-user.nodeSelector.enabled }}
       nodeSelector:
-        {{ .Values.osmSandboxUser.nodeSelector.label_key }} : {{ .Values.osmSandboxUser.nodeSelector.label_value }}
+        {{ .Values.osms-user.nodeSelector.label_key }} : {{ .Values.osms-user.nodeSelector.label_value }}
       {{- end }}
 {{- end }}

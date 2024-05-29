@@ -1,0 +1,8 @@
+{{- if .Values.osms-user.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-osms-user-common-env
+data:
+    ENVIRONMENT: {{ .Values.osms-user.env.ENVIRONMENT | quote }}
+{{- end }}

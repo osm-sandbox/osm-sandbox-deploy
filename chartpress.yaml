@@ -4,5 +4,5 @@ charts:
     images:
       web:
         valuesPath: osm-seed.web.image
-      osm-sandbox-user:
-        valuesPath: osmSandboxUser.image
+      osms-user:
+        valuesPath: osms-user.image

@@ -9,9 +9,6 @@ osm-seed:
   adminEmail: osm-sandbox@googlegroups.com
   db:
     enabled: true
-    image:
-      name: "d"
-      tag: "d"
     env:
       POSTGRES_DB: openstreetmap
       POSTGRES_USER: postgres
@@ -34,7 +31,7 @@ osm-seed:
 #######################################
 # OSM sandbox users
 #######################################
-osmSandboxUser:
+osms-user:
   enabled: true
   ingressDomain: init
   env:

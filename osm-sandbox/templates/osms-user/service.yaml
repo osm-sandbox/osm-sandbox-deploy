@@ -1,11 +1,11 @@
-{{- if .Values.osmSandboxUser.enabled -}}
+{{- if .Values.osms-user.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "osm-sandbox.fullname" . }}-osmSandboxUser
+  name: {{ template "osm-sandbox.fullname" . }}-osms-user
   labels:
     app: {{ template "osm-sandbox.name" . }}
-    component: osmSandboxUser-service
+    component: osms-user-service
     environment: {{ .Values.environment }}
     release: {{ .Release.Name }}
   annotations:
@@ -20,7 +20,7 @@ metadata:
     {{- else }}
     fake.annotation: fake
     {{- end }}
-    {{- with .Values.osmSandboxUser.serviceAnnotations }}
+    {{- with .Values.osms-user.serviceAnnotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
@@ -39,5 +39,5 @@ spec:
   selector:
     app: {{ template "osm-sandbox.name" . }}
     release: {{ .Release.Name }}
-    run: {{ .Release.Name }}-osmSandboxUser-web
+    run: {{ .Release.Name }}-osms-user-web
 {{- end }}
