@@ -1,14 +1,14 @@
-# OSM Sandbox Deploy
+# OpenStreetMap Sandbox Deploy
 
-- Deploy osm-sandbox
+OSM Sandbox Deploy is a repository that contains helm charts. It is based on [osm-seed](https://github.com/developmentseed/osm-seed) and a customized Web image.
 
 
+## Deploying locally
 
-```
-cd osm-sandbox
+Replace the values in values.template.yaml and deploy it into kubernetes cluster.
+
+```sh
 helm dependency update
-cd ..
 helm upgrade --install osm --wait osm-sandbox/ -f values.dev.yaml -f osm-sandbox/values.yaml --dry-run
-helm upgrade --install osm --wait osm-sandbox/ -f values.dev.yaml
-
+# helm upgrade --install osm --wait osm-sandbox/ -f values.dev.yaml
 ```
