@@ -1,5 +1,5 @@
 osm-seed:
   web:
     image:
-      name: ghcr.io/geocompas/web
-      tag: 0.0.1-0.dev.git.6.h74b41c2
+      name: chartpress_replace_me
+      tag: chartpress_replace_me

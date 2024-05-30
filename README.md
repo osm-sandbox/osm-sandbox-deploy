@@ -1,4 +1,4 @@
-# OpenStreetMap Sandbox Deploy
+# OpenStreetMap Sandbox Stack Deployment
 
 OSM Sandbox Deploy is a repository that contains helm charts. It is based on [osm-seed](https://github.com/developmentseed/osm-seed) and a customized Web image.
 
