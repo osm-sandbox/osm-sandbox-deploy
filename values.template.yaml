@@ -1,0 +1,87 @@
+osm-seed:
+  environment: dev
+  cloudProvider: aws
+  AWS_S3_BUCKET: 'osm-sandbox'
+  AWS_SSL_ARN: 'none'
+  serviceType: ClusterIP
+  createClusterIssuer: false
+  domain: rub21.staging.osm-sandbox.org
+  adminEmail: osm-sandbox-admins@googlegroups.com
+  # ====================================================================================================
+  # Variables for db
+  # ====================================================================================================
+  db:
+    enabled: true
+    nodeSelector:
+      enabled: false
+      label_key: nodegroup_type
+      label_value: db
+    env:
+      POSTGRES_DB: {{POSTGRES_DB}}
+      POSTGRES_USER: {{POSTGRES_USER}}
+      POSTGRES_PASSWORD: {{POSTGRES_PASSWORD}}
+      LOG_STATEMENT: "mod"
+    persistenceDisk:
+      enabled: false
+      accessMode: ReadWriteOnce
+      mountPath: /var/lib/postgresql/data
+      subPath: postgresql-db
+      AWS_ElasticBlockStore_volumeID: vol-09964172ef71bc8e8
+      AWS_ElasticBlockStore_size: 200Gi
+    resources:
+      enabled: false
+      requests:
+        memory: "10Gi"
+        cpu: "5"
+      limits:
+        memory: "10Gi"
+        cpu: "5"
+    sharedMemorySize: 256Mi
+    livenessProbeExec: false
+  # ====================================================================================================
+  # Variables for osm-seed website
+  # ====================================================================================================
+  web:
+    enabled: true
+    image:
+      name: developmentseed/osmseed-web
+      tag: 1.0.0-dev.he1070f2
+    nodeSelector:
+      enabled: false
+      label_key: nodegroup_type
+      label_value: web
+    replicaCount: 1
+    serviceAnnotations:
+      service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "300"
+    ingressDomain: www.rub21.staging.osm-sandbox.org
+    env:
+      MAILER_ADDRESS: 'none'
+      MAILER_DOMAIN: staging.osm-sandbox.org
+      MAILER_USERNAME: 'none'
+      MAILER_PASSWORD: 'none'
+      OSM_id_key: {{OSM_ID_KEY}}
+      OAUTH_CLIENT_ID: {{OAUTH_CLIENT_ID}}
+      OAUTH_KEY: {{OAUTH_KEY}}
+      MAILER_FROM: osm-sandbox-admins@googlegroups.com
+      NOMINATIM_URL: "none"
+      OVERPASS_URL: "none"
+      NEW_RELIC_LICENSE_KEY: 'none'
+      NEW_RELIC_APP_NAME: 'none'
+      ORGANIZATION_NAME: OpenStreetMap-Sandbox
+      WEBSITE_STATUS: "online"
+      # API_TIMEOUT: 600
+      # WEB_TIMEOUT: 600
+    resources:
+      enabled: false
+      requests:
+        memory: "2Gi"
+        cpu: "1"
+      limits:
+        memory: "2Gi"
+        cpu: "1"
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 10
+      cpuUtilization: 80
+    sharedMemorySize: 16Mi
