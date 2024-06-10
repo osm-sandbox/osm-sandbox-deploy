@@ -1,21 +1,21 @@
 ---
 layout: none
 ---
-{%- assign osm-seed = site.data.index.entries.osm-seed | sort: 'created' | reverse -%}
+{%- assign osm-sandbox = site.data.index.entries.osm-sandbox | sort: 'created' | reverse -%}
 
-{%- assign osm_seed_latest = osm-seed | first -%}
+{%- assign osm_sandbox_latest = osm-sandbox | first -%}
 
-{%- capture "osm_seed_stable_version" -%}
-{%- for chart in osm-seed -%}
+{%- capture "osm_sandbox_stable_version" -%}
+{%- for chart in osm-sandbox -%}
     {%- unless chart.version contains "-" -%}
         {{ chart.version }};
     {%- endunless -%}
 {%- endfor -%}
 {%- endcapture -%}
-{%- assign osm_seed_stable_version = osm_seed_stable_version | split: ";" | first -%}
+{%- assign osm_sandbox_stable_version = osm_sandbox_stable_version | split: ";" | first -%}
 
-{%- capture "osm_seed_pre_version" -%}
-{%- for chart in osm-seed -%}
+{%- capture "osm_sandbox_pre_version" -%}
+{%- for chart in osm-sandbox -%}
     {%- assign dots_count_after_dash = chart.version | split: "-" | shift | first | split: "." | size | minus: 1 -%}
     {%- assign first_char_after_dash = chart.version | split: "-" | shift | first | slice: 0 -%}
     {%- if chart.version contains "-" -%}
@@ -29,15 +29,15 @@ layout: none
     {%- endif -%}
 {%- endfor -%}
 {%- endcapture -%}
-{%- assign osm_seed_pre_version = osm_seed_pre_version | split: ";" | first -%}
+{%- assign osm_sandbox_pre_version = osm_sandbox_pre_version | split: ";" | first -%}
 
 
 {
-    "osm-seed":
+    "osm-sandbox":
         {
-            "stable": "{{ osm_seed_stable_version }}",
-            "pre": "{{ osm_seed_pre_version }}",
-            "dev": "{{ osm_seed_latest.version }}",
-            "latest": "{{ osm_seed_latest.version }}"
+            "stable": "{{ osm_sandbox_stable_version }}",
+            "pre": "{{ osm_sandbox_pre_version }}",
+            "dev": "{{ osm_sandbox_latest.version }}",
+            "latest": "{{ osm_sandbox_latest.version }}"
         }
 }
