@@ -1,6 +1,6 @@
 apiVersion: v1
 entries:
-  osm-sandbox-deploy:
+  osm-sandbox:
   - apiVersion: v1
     appVersion: 0.0.1
     created: "2024-06-09T21:45:39.526002-05:00"
@@ -35,14 +35,4 @@ entries:
     urls:
     - https://osmus.github.io/osm-sandbox-deploy/osm-sandbox-deploy-0.0.1-0.dev.git.14.hce80493.tgz
     version: 0.0.1-0.dev.git.14.hce80493
-  osm-seed:
-  - apiVersion: v1
-    appVersion: 1.0.0
-    created: "2022-03-16T18:29:36.066055833Z"
-    description: Helm Chart to deploy the OpenStreetMap software
-    digest: a9f10a5d44d6aa6395375a78bb72eaa7ca522ccc6cf484b5ee09bfb34a580ea5
-    name: osm-seed
-    urls:
-    - https://devseed.com/osm-seed-chart/osm-seed-1.0.0.tgz
-    version: 1.0.0
 generated: "2024-06-09T21:45:39.52295-05:00"
