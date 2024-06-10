@@ -1,6 +1,0 @@
-charts:
-  - name: osm-sandbox
-    imagePrefix: ghcr.io/osmus/
-    images:
-      osm-sandbox-web:
-        valuesPath: osm-seed.web.image

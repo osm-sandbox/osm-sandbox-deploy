@@ -1,5 +1,0 @@
-osm-seed:
-  web:
-    image:
-      name: ghcr.io/osmus/osm-sandbox-web
-      tag: 0.0.1-0.dev.git.10.h6a7e53b
