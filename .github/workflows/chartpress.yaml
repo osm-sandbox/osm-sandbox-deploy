@@ -27,6 +27,6 @@ jobs:
         run: |
           pip install chartpress six ruamel.yaml
       - name: Run Chartpress
-        run: chartpress --push
+        run: chartpress --push --publish-chart
         env:
           GITHUB_TOKEN: ${{ secrets.GHCR_GITHUB_TOKEN }}

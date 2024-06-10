@@ -1,6 +1,10 @@
 charts:
   - name: osm-sandbox
     imagePrefix: ghcr.io/osmus/
+    repo:
+      git: osmus/osm-sandbox-deploy
+      published: https://osmus.github.io/osm-sandbox-deploy
+      branch: gh-pages
     images:
       osm-sandbox-web:
         valuesPath: osm-seed.web.image
