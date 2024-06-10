@@ -3,7 +3,7 @@ $(document).ready(function () {
   var queryParams = new URLSearchParams(window.location.search);
   var username = queryParams.get("user");
   if (username) {
-    $(".content-heading h1").text("Loging in OpenStreetMap Sandbox ...");
+    $(".content-heading h1").text("Loging in OpenStreetMap Sandbox");
     $("#username").hide();
     $("#password").hide();
     $("#username").val(username);
