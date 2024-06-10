@@ -1,7 +1,7 @@
 ---
 layout: none
 ---
-{%- assign osm-sandbox = site.data.index.entries.osm-sandbox | sort: 'created' | reverse -%}
+{%- assign osm-sandbox = site.data.index.entries.osm-sandbox-deploy | sort: 'created' | reverse -%}
 
 {%- assign osm_sandbox_latest = osm-sandbox | first -%}
 

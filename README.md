@@ -1,1 +1,1 @@
-Chart for osm-seed. WIP.
+# Chart for OSM-Sandbox
