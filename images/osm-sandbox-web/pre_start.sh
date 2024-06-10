@@ -3,7 +3,7 @@ set -x
 ## DB restoring
 export PGPASSWORD=$POSTGRES_PASSWORD
 workdir="/var/www"
-curl -o $workdir/osm-sandbox.backup.sql https://osmsandbox.s3.amazonaws.com/osm-sandbox.backup-fixed.sql
+curl -o $workdir/osm-sandbox.backup.sql $BACKUP_FILE_URL
 
 # Function to check if any tables exist in the PostgreSQL database
 check_number_of_tables() {

@@ -5,7 +5,7 @@ services:
     env_file:
       - ./.env
     build:
-      context: ./images/web
+      context: ./images/osm-sandbox-web
       dockerfile: Dockerfile
     ports:
       - '80:80'
