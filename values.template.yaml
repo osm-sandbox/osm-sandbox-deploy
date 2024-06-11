@@ -1,12 +1,14 @@
 osm-seed:
   environment: dev
   cloudProvider: aws
-  AWS_S3_BUCKET: 'osm-sandbox'
+  AWS_S3_BUCKET: 'osmsandbox'
   AWS_SSL_ARN: 'none'
   serviceType: ClusterIP
   createClusterIssuer: false
-  domain: hot.boxes.osmsandbox.us
+  domain: osm.boxes.osmsandbox.us
   adminEmail: osm-sandbox-admins@googlegroups.com
+
+
   # ====================================================================================================
   # Variables for db
   # ====================================================================================================
@@ -15,7 +17,7 @@ osm-seed:
     nodeSelector:
       enabled: true
       label_key: nodegroup_type
-      label_value: t3_micro_ondemand
+      label_value: t3-medium-ondemand
     env:
       POSTGRES_DB: 'openstreetmap'
       POSTGRES_USER: 'postgres'
@@ -29,7 +31,7 @@ osm-seed:
       AWS_ElasticBlockStore_volumeID: vol-09964172ef71bc8e8
       AWS_ElasticBlockStore_size: 200Gi
     resources:
-      enabled: true
+      enabled: false
       requests:
         memory: "800mi"
         cpu: "5"
@@ -43,25 +45,28 @@ osm-seed:
   # ====================================================================================================
   web:
     enabled: true
-    image:
-      name: rub21/osm-sandbox-web
-      tag: v6
+    # image:
+    #   name: rub21/osm-sandbox-web
+    #   tag: v6
+    # image:
+    #   name: "developmentseed/osmseed-web"
+    #   tag: "0.1.0-n774.h5f1dfdd"
     nodeSelector:
       enabled: true
       label_key: nodegroup_type
-      label_value: t3_micro_ondemand
+      label_value: t3-medium-ondemand
     replicaCount: 1
     serviceAnnotations:
       service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "300"
-    ingressDomain: www.hot.boxes.osmsandbox.us
+    ingressDomain: www.osm.boxes.osmsandbox.us
     env:
       MAILER_ADDRESS: 'none'
       MAILER_DOMAIN: osmsandbox.us
       MAILER_USERNAME: 'none'
       MAILER_PASSWORD: 'none'
-      OSM_id_key: "${OSM_ID_KEY}"
-      OAUTH_CLIENT_ID: "${OAUTH_CLIENT_ID}"
-      OAUTH_KEY: "${OAUTH_KEY}"
+      OSM_id_key: "none"
+      OAUTH_CLIENT_ID: "none"
+      OAUTH_KEY: "none"
       MAILER_FROM: osm-sandbox-admins@googlegroups.com
       NOMINATIM_URL: "none"
       OVERPASS_URL: "none"
@@ -71,6 +76,7 @@ osm-seed:
       WEBSITE_STATUS: "online"
       # API_TIMEOUT: 600
       # WEB_TIMEOUT: 600
+      BACKUP_FILE_URL: https://osmsandbox.us/backup-fixed.sql
     resources:
       enabled: false
       requests:
@@ -85,3 +91,39 @@ osm-seed:
       maxReplicas: 10
       cpuUtilization: 80
     sharedMemorySize: 16Mi
+
+    # ====================================================================================================
+    # Variables for memcached. Memcached is used to store session cookies
+    # ====================================================================================================
+  memcached:
+    enabled: true
+    nodeSelector:
+      enabled: true
+      label_key: nodegroup_type
+      label_value: t3-medium-ondemand
+    resources:
+      enabled: false
+      requests:
+        memory: "8Gi"
+        cpu: "2"
+      limits:
+        memory: "8Gi"
+        cpu: "2"
+
+  planetDump:
+    enabled: true
+    schedule: '* * * * *'
+    nodeSelector:
+      enabled: false
+      label_key: nodegroup_type
+      label_value: job
+    env:
+      OVERWRITE_PLANET_FILE: false
+    resources:
+      enabled: false
+      requests:
+        memory: "4Gi"
+        cpu: "2"
+      limits:
+        memory: "8Gi"
+        cpu: "4"
