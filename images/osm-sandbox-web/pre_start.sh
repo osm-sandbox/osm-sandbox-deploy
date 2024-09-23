@@ -20,7 +20,7 @@ while [ "$flag" = true ]; do
       flag=false
     else
       flag=false
-      sed -i 's/www.hot.boxes.osmsandbox.us/'"$SERVER_URL"'/g' $workdir/osm-sandbox.backup.sql
+      sed -i 's/osm-sandbox.org/'"$SERVER_URL"'/g' $workdir/osm-sandbox.backup.sql
       # Import the SQL backup file into PostgreSQL
       psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f $workdir/osm-sandbox.backup.sql
     fi
