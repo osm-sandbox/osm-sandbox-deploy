@@ -1,25 +1,27 @@
 osm-seed:
   environment: dev
   cloudProvider: aws
-  AWS_S3_BUCKET: 'osm-sandbox'
+  AWS_S3_BUCKET: 'osmsandbox'
   AWS_SSL_ARN: 'none'
   serviceType: ClusterIP
   createClusterIssuer: false
-  domain: rub21.staging.osm-sandbox.org
+  domain: osm.boxes.osmsandbox.us
   adminEmail: osm-sandbox-admins@googlegroups.com
+
+
   # ====================================================================================================
   # Variables for db
   # ====================================================================================================
   db:
     enabled: true
     nodeSelector:
-      enabled: false
+      enabled: true
       label_key: nodegroup_type
-      label_value: db
+      label_value: t3-medium-ondemand
     env:
-      POSTGRES_DB: {{POSTGRES_DB}}
-      POSTGRES_USER: {{POSTGRES_USER}}
-      POSTGRES_PASSWORD: {{POSTGRES_PASSWORD}}
+      POSTGRES_DB: 'openstreetmap'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: '1234'
       LOG_STATEMENT: "mod"
     persistenceDisk:
       enabled: false
@@ -31,7 +33,7 @@ osm-seed:
     resources:
       enabled: false
       requests:
-        memory: "10Gi"
+        memory: "800mi"
         cpu: "5"
       limits:
         memory: "10Gi"
@@ -43,25 +45,28 @@ osm-seed:
   # ====================================================================================================
   web:
     enabled: true
-    image:
-      name: developmentseed/osmseed-web
-      tag: 1.0.0-dev.he1070f2
+    # image:
+    #   name: rub21/osm-sandbox-web
+    #   tag: v6
+    # image:
+    #   name: "developmentseed/osmseed-web"
+    #   tag: "0.1.0-n774.h5f1dfdd"
     nodeSelector:
-      enabled: false
+      enabled: true
       label_key: nodegroup_type
-      label_value: web
+      label_value: t3-medium-ondemand
     replicaCount: 1
     serviceAnnotations:
       service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "300"
-    ingressDomain: www.rub21.staging.osm-sandbox.org
+    ingressDomain: www.osm.boxes.osmsandbox.us
     env:
       MAILER_ADDRESS: 'none'
-      MAILER_DOMAIN: staging.osm-sandbox.org
+      MAILER_DOMAIN: osmsandbox.us
       MAILER_USERNAME: 'none'
       MAILER_PASSWORD: 'none'
-      OSM_id_key: {{OSM_ID_KEY}}
-      OAUTH_CLIENT_ID: {{OAUTH_CLIENT_ID}}
-      OAUTH_KEY: {{OAUTH_KEY}}
+      OSM_id_key: "none"
+      OAUTH_CLIENT_ID: "none"
+      OAUTH_KEY: "none"
       MAILER_FROM: osm-sandbox-admins@googlegroups.com
       NOMINATIM_URL: "none"
       OVERPASS_URL: "none"
@@ -71,6 +76,7 @@ osm-seed:
       WEBSITE_STATUS: "online"
       # API_TIMEOUT: 600
       # WEB_TIMEOUT: 600
+      BACKUP_FILE_URL: https://osmsandbox.us/backup-fixed.sql
     resources:
       enabled: false
       requests:
@@ -85,3 +91,39 @@ osm-seed:
       maxReplicas: 10
       cpuUtilization: 80
     sharedMemorySize: 16Mi
+
+    # ====================================================================================================
+    # Variables for memcached. Memcached is used to store session cookies
+    # ====================================================================================================
+  memcached:
+    enabled: true
+    nodeSelector:
+      enabled: true
+      label_key: nodegroup_type
+      label_value: t3-medium-ondemand
+    resources:
+      enabled: false
+      requests:
+        memory: "8Gi"
+        cpu: "2"
+      limits:
+        memory: "8Gi"
+        cpu: "2"
+
+  planetDump:
+    enabled: true
+    schedule: '* * * * *'
+    nodeSelector:
+      enabled: false
+      label_key: nodegroup_type
+      label_value: job
+    env:
+      OVERWRITE_PLANET_FILE: false
+    resources:
+      enabled: false
+      requests:
+        memory: "4Gi"
+        cpu: "2"
+      limits:
+        memory: "8Gi"
+        cpu: "4"

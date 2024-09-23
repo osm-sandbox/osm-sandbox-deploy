@@ -2,3 +2,6 @@ charts
 .DS_Store
 values.dev.yaml
 .env
+tmp/
+values.dev.yaml
+values.dev.osm.yaml
