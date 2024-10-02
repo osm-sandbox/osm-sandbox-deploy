@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-populate-apidb-job
+  labels:
+    app: {{ template "osm-sandbox-deploy.name" . }}
+    component: sandbox-populate-apidb-job
+    environment: {{ .Values.environment }}
+    release: {{ .Release.Name }}
+spec:
+  template:
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-populate-apidb-job
+        image: {{ .Values.sandboxPopulateApidb.image.name }}:{{ .Values.sandboxPopulateApidb.image.tag }}
+        command: ['/start.sh']
+        env:
+          - name: POSTGRES_HOST
+            value: {{ .Release.Name }}-db
+          - name: POSTGRES_DB
+            value: {{ .Values.db.env.POSTGRES_DB }}
+          - name: POSTGRES_PASSWORD
+            value: {{ quote .Values.db.env.POSTGRES_PASSWORD }}
+          - name: POSTGRES_USER
+            value: {{ .Values.db.env.POSTGRES_USER }}
+          - name: URL_FILE_TO_IMPORT
+            value: "https://github.com/osmus/osm-sandbox-data/raw/refs/heads/main/ncem/cumberland_buildings.osm.bz2"
+            # {{.Values.sandboxPopulateApidb.env.URL_FILE_TO_IMPORT}}
+      restartPolicy: Never
+      nodeSelector:
+        {{ .Values.sandboxPopulateApidb.nodeSelector.label_key }} : {{ .Values.sandboxPopulateApidb.nodeSelector.label_value }}
