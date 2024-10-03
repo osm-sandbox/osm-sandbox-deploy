@@ -19,6 +19,7 @@ RUN set -ex \
         "tmux" \
         "zsh" \
         "wget" \
+        "bzip2" \
         "postgresql-client" \
      && rm -rf /var/lib/apt/lists/*
 
