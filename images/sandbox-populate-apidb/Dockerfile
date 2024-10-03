@@ -19,6 +19,7 @@ RUN set -ex \
         "tmux" \
         "zsh" \
         "wget" \
+        "postgresql-client" \
      && rm -rf /var/lib/apt/lists/*
 
 VOLUME /mnt/data
