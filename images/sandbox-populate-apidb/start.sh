@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -ex
 export VOLUME_DIR=/mnt/data
 export PGPASSWORD=$POSTGRES_PASSWORD
 
@@ -12,8 +12,7 @@ else
 fi
 
 # Get the data
-file="https://github.com/osmus/osm-sandbox-data/raw/refs/heads/main/ncem/cumberland_buildings.osm.bz2" 
-#$(basename $URL_FILE_TO_IMPORT)
+file=$(basename $URL_FILE_TO_IMPORT)
 osmFile=$VOLUME_DIR/$file
 [ ! -f $osmFile ] && wget $URL_FILE_TO_IMPORT
 
