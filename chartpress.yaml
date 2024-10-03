@@ -9,4 +9,4 @@ charts:
       osm-sandbox-web:
         valuesPath: osm-seed.web.image
       sandbox-populate-apidb:
-        valuesPath: osm-seed.sandboxPopulateApidb.image
+        valuesPath: osm-seed.populateApidb.image

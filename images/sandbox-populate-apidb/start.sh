@@ -12,7 +12,8 @@ else
 fi
 
 # Get the data
-file=$(basename $URL_FILE_TO_IMPORT)
+file="https://github.com/osmus/osm-sandbox-data/raw/refs/heads/main/ncem/cumberland_buildings.osm.bz2" 
+#$(basename $URL_FILE_TO_IMPORT)
 osmFile=$VOLUME_DIR/$file
 [ ! -f $osmFile ] && wget $URL_FILE_TO_IMPORT
 

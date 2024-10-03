@@ -1,6 +1,6 @@
 dependencies:
 - name: osm-seed
   repository: https://devseed.com/osm-seed-chart/
-  version: 0.1.0-n791.hef4b2bb
-digest: sha256:6856ad0910b21f767b209cb569c0e0dfbed96d73987e0991030fc18c4a580578
-generated: "2024-05-29T11:10:59.381937-05:00"
+  version: 0.1.0-n791.h1707cdf
+digest: sha256:01162cfc79062fe025727dd2c2563c5ca237a70456b8b2e13661af328812adb8
+generated: "2024-10-03T13:55:20.699267-04:00"
