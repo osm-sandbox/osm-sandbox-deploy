@@ -18,6 +18,7 @@ RUN set -ex \
         "pyosmium" \
         "tmux" \
         "zsh" \
+        "wget" \
      && rm -rf /var/lib/apt/lists/*
 
 VOLUME /mnt/data
