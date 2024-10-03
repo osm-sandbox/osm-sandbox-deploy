@@ -3,6 +3,23 @@ entries:
   osm-sandbox-deploy:
   - apiVersion: v1
     appVersion: 0.0.1
+    created: "2024-10-03T20:46:05.714453748Z"
+    dependencies:
+    - name: osm-seed
+      repository: https://devseed.com/osm-seed-chart/
+      version: 0.1.0-n791.h1707cdf
+    description: OSM sandbox Deploy Chart
+    digest: 8b80ee49fdfb13e312d9d98aeffc2a72d334c4d06999a52bd4f62a8db384e267
+    home: https://github.com/osmus/osm-sandbox-deploy
+    kubeVersion: '>=1.15.0-0'
+    name: osm-sandbox-deploy
+    sources:
+    - https://github.com/osmus/osm-sandbox-deploy
+    urls:
+    - https://osmus.github.io/osm-sandbox-deploy/osm-sandbox-deploy-0.0.1-0.dev.git.33.hef6e2bc.tgz
+    version: 0.0.1-0.dev.git.33.hef6e2bc
+  - apiVersion: v1
+    appVersion: 0.0.1
     created: "2024-10-03T19:06:00.098868018Z"
     dependencies:
     - name: osm-seed
@@ -256,4 +273,4 @@ entries:
     urls:
     - https://osmus.github.io/osm-sandbox-deploy/osm-sandbox-deploy-0.0.1-0.dev.git.14.hce80493.tgz
     version: 0.0.1-0.dev.git.14.hce80493
-generated: "2024-10-03T19:06:00.094806712Z"
+generated: "2024-10-03T20:46:05.711313249Z"
