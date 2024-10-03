@@ -4,6 +4,15 @@ osm-seed:
       name: chartpress_replace_me
       tag: chartpress_replace_me
   sandboxPopulateApidb:
+    enabled: false
     image:
       name: chartpress_replace_me
       tag: chartpress_replace_me
+    resources:
+      enabled: false
+      requests:
+        memory: "1Gi"
+        cpu: "2"
+      limits:
+        memory: "2Gi"
+        cpu: "2.5"
