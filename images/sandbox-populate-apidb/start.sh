@@ -1,22 +1,5 @@
 #!/usr/bin/env bash
-set -ex \
-     && apt-get update \
-     && DEBIAN_FRONTEND=noninteractive apt-get install \
-     -y --no-install-recommends \
-        "osmosis" \
-        "osmium-tool" \
-        # Cloud provider CLIs
-        "awscli" \
-        "gsutil" \
-        "azure-cli" \
-        # Other useful packages
-        "rsync" \
-        "pyosmium" \
-        "tmux" \
-        "zsh" \
-        "wget" \
-     && rm -rf /var/lib/apt/lists/*
-
+set -e
 export VOLUME_DIR=/mnt/data
 export PGPASSWORD=$POSTGRES_PASSWORD
 
