@@ -71,6 +71,8 @@ osm-seed:
       # API_TIMEOUT: 600
       # WEB_TIMEOUT: 600
       BACKUP_FILE_URL: https://osmsandbox.us/backup-fixed.sql
+      TM_OAUTH_CLIENT_ID: "none"
+      TM_OAUTH_CLIENT_SECRET_HASHED: "none"
     resources:
       enabled: false
       requests:
