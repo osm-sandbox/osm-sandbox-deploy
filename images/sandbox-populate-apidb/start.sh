@@ -3,7 +3,9 @@ set -ex
 export VOLUME_DIR=/mnt/data
 export PGPASSWORD=$POSTGRES_PASSWORD
 
-# OSMOSIS tuning: https://wiki.openstreetmap.org/wiki/Osmosis/Tuning,https://lists.openstreetmap.org/pipermail/talk/2012-October/064771.html
+# OSMOSIS tuning:
+#  https://wiki.openstreetmap.org/wiki/Osmosis/Tuning,
+#  https://lists.openstreetmap.org/pipermail/talk/2012-October/064771.html
 if [ -z "$MEMORY_JAVACMD_OPTIONS" ]; then
     echo JAVACMD_OPTIONS=\"-server\" > ~/.osmosis
 else
@@ -17,8 +19,6 @@ osmFile=$VOLUME_DIR/$file
 [ ! -f $osmFile ] && wget $URL_FILE_TO_IMPORT
 
 function importData () {
-    # This is using a osmosis 0.47. TODO: test with osmosis 0.48, and remove the following line
-    # psql -U $POSTGRES_USER -h $POSTGRES_HOST -d $POSTGRES_DB -c "ALTER TABLE users ADD COLUMN nearby VARCHAR;"
     # In case the import file is a PBF
     if [ ${osmFile: -4} == ".pbf" ]; then
         pbfFile=$osmFile

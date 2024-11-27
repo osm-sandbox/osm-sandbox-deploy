@@ -45,12 +45,6 @@ osm-seed:
   # ====================================================================================================
   web:
     enabled: true
-    # image:
-    #   name: rub21/osm-sandbox-web
-    #   tag: v6
-    # image:
-    #   name: "developmentseed/osmseed-web"
-    #   tag: "0.1.0-n774.h5f1dfdd"
     nodeSelector:
       enabled: true
       label_key: nodegroup_type
