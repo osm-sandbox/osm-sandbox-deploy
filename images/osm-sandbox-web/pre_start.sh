@@ -27,7 +27,7 @@ while [ "$flag" = true ]; do
   fi
 done
 
-psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB "INSERT INTO oauth_applications (owner_type, owner_id, name, uid, secret, redirect_uri, scopes, confidential, created_at, updated_at) VALUES ('User', 1, 'Tasking Manager', '${TM_OAUTH_CLIENT_ID}', '${TM_OAUTH_CLIENT_SECRET_HASHED}', E'https://tasks.openstreetmap.us/static/pdeditor/land2.html\r\nhttps://tasks.teachosm.org/static/pdeditor/land2.html', 'read_prefs write_prefs write_api read_gpx write_notes', false, now() at time zone 'utc', now() at time zone 'utc');"
+psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -c "INSERT INTO oauth_applications (owner_type, owner_id, name, uid, secret, redirect_uri, scopes, confidential, created_at, updated_at) VALUES ('User', 1, 'Tasking Manager', '${TM_OAUTH_CLIENT_ID}', '${TM_OAUTH_CLIENT_SECRET_HASHED}', E'https://tasks.openstreetmap.us/static/pdeditor/land2.html\r\nhttps://tasks.teachosm.org/static/pdeditor/land2.html', 'read_prefs write_prefs write_api read_gpx write_notes', false, now() at time zone 'utc', now() at time zone 'utc');"
 
 # Change ORG name
 find config/locales/ -type f -exec sed -i "s/OpenStreetMap/${ORGANIZATION_NAME}/g" {} +
