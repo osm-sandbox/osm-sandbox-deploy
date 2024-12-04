@@ -4,7 +4,7 @@ charts:
     repo:
       git: osmus/osm-sandbox-deploy
       published: https://osmus.github.io/osm-sandbox-deploy
-      branch: gh-pages
+      branch: main
     images:
       osm-sandbox-web:
         valuesPath: osm-seed.web.image
