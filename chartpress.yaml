@@ -1,9 +1,9 @@
 charts:
   - name: osm-sandbox
-    imagePrefix: ghcr.io/osmus/
+    imagePrefix: ghcr.io/osm-sandbox/
     repo:
-      git: osmus/osm-sandbox-deploy
-      published: https://osmus.github.io/osm-sandbox-deploy
+      git: osm-sandbox/osm-sandbox-deploy
+      published: https://osm-sandbox.github.io/osm-sandbox-deploy
       branch: main
     images:
       osm-sandbox-web:

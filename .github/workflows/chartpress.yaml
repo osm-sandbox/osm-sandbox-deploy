@@ -9,14 +9,16 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     timeout-minutes: 120
+    permissions:
+      packages: write
     steps:
       - uses: actions/checkout@v4
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GHCR_GITHUB_TOKEN }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup python
         uses: actions/setup-python@v5
         with:
@@ -29,4 +31,4 @@ jobs:
       - name: Run Chartpress
         run: chartpress --push --publish-chart
         env:
-          GITHUB_TOKEN: ${{ secrets.GHCR_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
