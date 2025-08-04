@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     permissions:
+      contents: write
       packages: write
+      pages: write
     steps:
       - uses: actions/checkout@v4
       - name: Login to GitHub Container Registry
