@@ -27,9 +27,19 @@ while [ "$flag" = true ]; do
   fi
 done
 
-# TODO: Get actual environment variable replacement working
-TM_OAUTH_CLIENT_ID="7yDot3Plq2g0cbapXcTEpSKldYWDk-BTyeUNl6YtC0I"
-TM_OAUTH_CLIENT_SECRET_HASHED="3964467e2b098792858b163f69f673a5846254dc8af671d33ef03b36a9cac6e8"
+# Check required TM OAuth environment variables
+if [[ -z "${TM_OAUTH_CLIENT_ID}" ]]; then
+  echo "ERROR: TM_OAUTH_CLIENT_ID environment variable is required but not set"
+  exit 1
+fi
+
+if [[ -z "${TM_OAUTH_CLIENT_SECRET}" ]]; then
+  echo "ERROR: TM_OAUTH_CLIENT_SECRET environment variable is required but not set"
+  exit 1
+fi
+
+# Compute hashed secret for database storage
+TM_OAUTH_CLIENT_SECRET_HASHED=$(echo -n "${TM_OAUTH_CLIENT_SECRET}" | sha256sum | cut -d' ' -f1)
 
 psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -c "INSERT INTO oauth_applications (owner_type, owner_id, name, uid, secret, redirect_uri, scopes, confidential, created_at, updated_at) VALUES ('User', 1, 'Tasking Manager', '${TM_OAUTH_CLIENT_ID}', '${TM_OAUTH_CLIENT_SECRET_HASHED}', E'https://tasks.openstreetmap.us/static/sandbox-id/land2.html\r\nhttps://tasks.teachosm.org/static/pdeditor/land2.html', 'read_prefs write_prefs write_api read_gpx write_notes', false, now() at time zone 'utc', now() at time zone 'utc');"
 
