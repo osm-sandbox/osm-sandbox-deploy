@@ -35,3 +35,9 @@ psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -c "INSERT INTO oauth_a
 
 # Change ORG name
 find config/locales/ -type f -exec sed -i "s/OpenStreetMap/${ORGANIZATION_NAME}/g" {} +
+
+# Patch OpenStreetMap Rails application to support the password OAuth grant type.
+# This is needed so that the Dashboard API server can use a username/password combo
+# to retrieve an OAuth token for a sandbox, and return that token to a frontend
+# application (like iD) to use to authenticate and edit the sandbox.
+sed -i 's/grant_flows %w\[authorization_code\]/grant_flows %w[password authorization_code]/' config/initializers/doorkeeper.rb
