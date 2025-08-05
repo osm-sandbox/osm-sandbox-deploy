@@ -1,0 +1,27 @@
+{{- if .Values.osm-seed.web.enabled -}}
+# Add TM OAuth environment variables to the web deployment
+# The upstream osm-seed chart doesn't include these, so we patch them in
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-osm-seed-web-tm-oauth
+  labels:
+    app: osm-seed
+    release: {{ .Release.Name }}
+data:
+  TM_OAUTH_CLIENT_ID: {{ .Values.osm-seed.web.env.TM_OAUTH_CLIENT_ID | default "none" | quote }}
+  TM_OAUTH_CLIENT_SECRET: {{ .Values.osm-seed.web.env.TM_OAUTH_CLIENT_SECRET | default "none" | quote }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-osm-seed-web
+spec:
+  template:
+    spec:
+      containers:
+      - name: osm-seed-web
+        envFrom:
+        - configMapRef:
+            name: {{ .Release.Name }}-osm-seed-web-tm-oauth
+{{- end -}}
