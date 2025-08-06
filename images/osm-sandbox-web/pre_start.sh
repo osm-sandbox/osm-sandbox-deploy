@@ -41,3 +41,12 @@ find config/locales/ -type f -exec sed -i "s/OpenStreetMap/${ORGANIZATION_NAME}/
 # to retrieve an OAuth token for a sandbox, and return that token to a frontend
 # application (like iD) to use to authenticate and edit the sandbox.
 sed -i 's/grant_flows %w\[authorization_code\]/grant_flows %w[password authorization_code]/' config/initializers/doorkeeper.rb
+
+# Add resource_owner_from_credentials block for password grant authentication
+sed -i '/orm :active_record/a\
+\
+  # Enable resource owner password credentials grant flow; see:\
+  # https://github.com/doorkeeper-gem/doorkeeper/wiki/Using-Resource-Owner-Password-Credentials-flow\
+  resource_owner_from_credentials do |_routes|\
+    User.authenticate(:username => params[:username], :password => params[:password])\
+  end' config/initializers/doorkeeper.rb
